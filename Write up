@@ -1,0 +1,22 @@
+Funcionamento de algoritimos
+O funcionamento de algoritmos é projetado para resolver um problema específico seguindo um conjunto de instruções bem definidas e organizadas. O programa funciona lendo um wordlsit.txt criada a partir de outro arquivo
+usando um script em python(catting.py) que tira as 100 primeiras palavras desse arquivo(1000 primeiras paçavras(rockyou.txt) e a adiciona em um arquivo chamado (word.txt). Os  algoritimos principais começão lendo
+o arquivo (word.txt) e cria uma lista com as palavras que estão lá. Foi usado Bubblesort, Mergesort e Quicksort,
+
+Bubblesort
+
+Bubble Sort, ou ordenação por flutuação, é um algoritmo de ordenação simples que percorre repetidamente uma lista comparando pares adjacentes de elementos e os trocando se estiverem na ordem errada. 
+Esse processo é repetido até que não haja mais trocas a serem feitas, indicando que a lista está ordenada. Embora seja fácil de entender e implementar, Bubble Sort não é muito eficiente em termos de tempo de execução
+e é menos utilizado em comparação com outros algoritmos de ordenação mais eficientes.
+
+Megasort
+
+O mergesort é um algoritmo de ordenação eficiente e recursivo. Ele divide a lista a ser ordenada em duas metades iguais, ordena cada metade recursivamente e, em seguida, combina as duas metades ordenadas
+em uma única lista ordenada. O processo de combinação é realizado por um método que mescla as duas metades em ordem crescente, comparando os elementos de cada uma das metades em ordem, selecionando o menor
+em uma única lista ordenada.
+
+Quicksort
+
+O Quicksort é um algoritmo de ordenação que usa a estratégia de divisão e conquista para ordenar uma lista. Ele escolhe um elemento pivô na lista e rearranja a lista de modo que os elementos menores que
+o pivô fiquem à sua esquerda e os elementos maiores fiquem à sua direita. Em seguida, o algoritmo é aplicado recursivamente às duas sublistas resultantes da divisão, uma contendo elementos menores e 
+outra contendo elementos maiores. O processo continua até que a lista seja completamente ordenada.
