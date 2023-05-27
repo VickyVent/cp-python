@@ -1,0 +1,115 @@
+from sklearn import tree
+from Report import Report
+import random
+import sys
+
+def show_disclaimer():
+    print("DISCLAIMER: This software isn't sufficient for a full diagnosis. In order to check your health status, it's recommended to see a doctor =)\n")
+    
+def generate_oral_tolerance(diagnosis):
+    if type(diagnosis) != int or (diagnosis < 0 or diagnosis > 2):
+        raise ValueError("Invalid diagnosis type.")
+    
+    return random.randint(80, 139) if diagnosis == 0 else (random.randint(140, 199) if diagnosis == 1 else random.randint(200, 260))
+
+def generate_dataset(x):
+    # Verifying if x is an integer.
+    if not str(x).isdigit():
+        raise ValueError("Invalid provided number of data.")
+    x = int(x)
+
+    generated_data = []
+    normal = pre = mellitus = 0
+    
+    for i in range(0, x):
+        m = generate_oral_tolerance(0 if i < int(x / 3) else (1 if i < 2 * int((x / 3)) else 2))
+
+        n = random.randint(126, 3 * 126) if m >= 200 else (random.randint(0, 99) if m < 140 else random.randint(100, 125))
+
+        o = random.randint(200, 400) if m >= 200 else random.randint(0, 199)
+        
+        report = Report(n, m, o)
+
+        if report.result == 0:
+            normal += 1
+        elif report.result == 1:
+            pre += 1
+        else:
+            mellitus += 1
+
+        generated_data.append(report)
+
+    print(f"\nDiagnosis generated data --> Normal: {normal}, Pre: {pre}, Mellitus: {mellitus}")
+    return generated_data
+
+def make_learn_model():    
+
+    dataset = generate_dataset(10000)
+
+    classifier = tree.DecisionTreeClassifier()
+    
+  
+    classifier.fit([data.raw() for data in dataset], [data.result for data in dataset])
+    
+    return classifier
+
+def input_report():
+    try:
+        inFasting = int(input("When fasting, your glycemia is... "))
+        oralTolerance = int(input("What's the result of your oral tolerance test? "))
+        casual = int(input("Your normal level of glycemia is... "))
+
+        return Report(inFasting, oralTolerance, casual).raw()
+
+    except:
+        return []
+
+def predict(model, data):
+    return model.predict([data])
+
+def show_menu(predict_model):
+    while True:
+        print("[0] --> Diagnosis.")
+        print("[1] --> Exit.")
+
+        try:
+            opt = int(input("\nSelect an option: "))
+            if opt == 1:
+                print("\nBye bye!")
+                sys.exit()
+
+            elif opt == 0:
+                print()
+
+                data = input_report()
+                diagnosis = predict(predict_model, data)
+                
+                if len(diagnosis) == 0:
+                    raise ValueError("Invalid inputted data.")
+
+                if diagnosis == [0]:
+                    print("Diagnosis result: No diabetes.")
+                elif diagnosis == [1]:
+                    print("Diagnosis result: Prediabetes.")
+                else:
+                    print("Diagnosis result: Diabetes mellitus.")
+
+            else:
+                raise ValueError("Invalid option.")
+
+        except Exception:
+            print("Oops! Looks like your selected option isn't a valid one. Please, try again.\n")
+
+show_disclaimer()
+
+print("Starting software...")
+print("Getting all reports and generating dataset...")
+print("Our model is learning... please, wait a little.")
+
+model = make_learn_model()
+print("The predict model is ready!\n")
+
+show_menu(model)
+
+print()
+show_disclaimer()
